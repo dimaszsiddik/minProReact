@@ -50,6 +50,19 @@ class T_Souvenir extends React.Component {
                 alert(error);
             })
     }
+    reloadMSouvenirData = () => {
+        axios.get(config.url + '/m-souvenir')
+            .then(res => {
+                this.setState({
+                   m_souvenirs: res.data,
+                })
+            })
+            .catch((error) => {
+                alert(error);
+            })
+
+    }
+
     reloadMEmployeeData = () => {
         axios.get(config.url + '/m-employee')
             .then(res => {
@@ -66,6 +79,7 @@ class T_Souvenir extends React.Component {
     componentDidMount() {
         this.reloadTSouvenirData();
         this.reloadMEmployeeData();
+        this.reloadMSouvenirData();
     }
     handleToggle = () => {
         this.setState({
@@ -124,7 +138,7 @@ class T_Souvenir extends React.Component {
 
             <div>
                 <h3>List Of Transaksi Souvenir Stock</h3>
-                <AddSouvenir createNew={this.state.createNew} handleAddItem={this.handleAddItem} handleToggle={this.handleToggle} handleClose={this.handleClose} handleChange={this.handleChange} handleChangeCheckBox={this.handleChangeCheckBox} t_souvenir_stock={this.state.t_souvenir_stock} handleSubmit={this.handleSubmit} items={this.state.items} m_employee={this.state.m_employee} />
+                <AddSouvenir createNew={this.state.createNew} handleAddItem={this.handleAddItem} handleToggle={this.handleToggle} handleClose={this.handleClose} handleChange={this.handleChange} handleChangeCheckBox={this.handleChangeCheckBox} t_souvenir_stock={this.state.t_souvenir_stock} handleSubmit={this.handleSubmit} items={this.state.items} m_employee={this.state.m_employee} m_souvenirs={this.state.m_souvenirs}/>
 
                 <CircularProgress className={classes.progress} style={{ visibility: (load ? 'visible' : 'hidden') }} color="secondary" />
 

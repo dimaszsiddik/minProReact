@@ -16,7 +16,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Table from '@material-ui/core/Table';
 
-export default ({ createNew,handleToggle,handleChange,handleClose,handleSubmit,handleAddItem, m_employee, t_souvenir_stock:{received_by, received_date, note }, items}) => {
+export default ({ createNew,handleToggle,handleChange,handleClose,handleSubmit,handleAddItem,m_souvenirs, m_employee, t_souvenir_stock:{received_by, received_date, note }, items}) => {
     return <Fragment>
         <Button onClick={handleToggle} variant="contained" color="primary" style={{float: 'right'}}>Add</Button>
         <Dialog
@@ -79,7 +79,31 @@ export default ({ createNew,handleToggle,handleChange,handleClose,handleSubmit,h
                             return(
                                 <TableRow key={n._id}>
                                     <TableCell>{index + 1}</TableCell>
-                                    <TableCell><TextField></TextField></TableCell>
+                                    <TableCell>
+                                    <FormControl style={{width:200}} required>
+                        <InputLabel shrink htmlFor="souvenir-simple" >Souvenir Name </InputLabel>
+                        <Select
+                            value={received_by}
+                            onChange={handleChange('m_souvenir_id')}
+                            inputProps={{
+                                name: 'm_souvenir_id',
+                                id: 'souvenir-simple',
+                               
+                            }}
+                            displayEmpty
+                        >
+                            <MenuItem value="" >
+                                Select Souvenir Name
+                            </MenuItem>
+                            {m_souvenirs.map(c => {
+                                return(
+                                    <MenuItem value={c._id}>{c.name}</MenuItem>
+                                )
+                            })}
+                        </Select>
+                    </FormControl>
+                    <br/>
+                                    </TableCell>
                                  </TableRow>
                             );
                         })}
