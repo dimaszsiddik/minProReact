@@ -16,12 +16,14 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Table from '@material-ui/core/Table';
 
-export default ({ createNew,handleToggle,handleChange,handleClose,handleSubmit,handleAddItem,m_souvenirs, m_employee, t_souvenir_stock:{received_by, received_date, note }, items}) => {
+export default ({ createNew,handleToggle,handleChange,handleClose,handleSubmit,handleChangeItem, handleAddItem,m_souvenirs, m_employee, t_souvenir_stock:{received_by, received_date, note }, items}) => {
     return <Fragment>
         <Button onClick={handleToggle} variant="contained" color="primary" style={{float: 'right'}}>Add</Button>
         <Dialog
             open={createNew}
             onClose={handleClose}
+            fullWidth
+            style={{textAlign:"center"}}
         >
             <DialogTitle id="alert-dialog-title">{"Add Souvenir Stock"}</DialogTitle>
             <form>
@@ -42,7 +44,7 @@ export default ({ createNew,handleToggle,handleChange,handleClose,handleSubmit,h
                             }}
                             displayEmpty
                         >
-                            <MenuItem value="" >
+                            <MenuItem value='' disabled>
                                 Select Employee Name
                             </MenuItem>
                             {m_employee.map(c => {
@@ -68,8 +70,8 @@ export default ({ createNew,handleToggle,handleChange,handleClose,handleSubmit,h
             <Table>
                 <TableHead>
                     <TableRow>
-                        <TableCell>No</TableCell>
-                        <TableCell>Souvenir Name</TableCell>
+                        <TableCell style={{width:50}}>No</TableCell>
+                        <TableCell style={{width:100}}>Souvenir Name</TableCell>
                         <TableCell >Qty</TableCell>
                         <TableCell>Note</TableCell>
                     </TableRow>
@@ -80,30 +82,27 @@ export default ({ createNew,handleToggle,handleChange,handleClose,handleSubmit,h
                                 <TableRow key={n._id}>
                                     <TableCell>{index + 1}</TableCell>
                                     <TableCell>
-                                    <FormControl style={{width:200}} required>
-                        <InputLabel shrink htmlFor="souvenir-simple" >Souvenir Name </InputLabel>
-                        <Select
-                            value={received_by}
-                            onChange={handleChange('m_souvenir_id')}
-                            inputProps={{
-                                name: 'm_souvenir_id',
-                                id: 'souvenir-simple',
-                               
-                            }}
-                            displayEmpty
-                        >
-                            <MenuItem value="" >
-                                Select Souvenir Name
-                            </MenuItem>
-                            {m_souvenirs.map(c => {
-                                return(
-                                    <MenuItem value={c._id}>{c.name}</MenuItem>
-                                )
-                            })}
-                        </Select>
-                    </FormControl>
-                    <br/>
+                                        <Select
+                                            value={n.m_souvenir_id}
+                                            onChange={handleChangeItem('m_souvenir_id', n._id)}
+                                            style={{ paddingLeft: 10, paddingRight:10 }}
+                                            inputProps={{
+                                                name: 'm_souvenir_id',
+                                                id: 'souvenir-simple',
+                                            }}>
+                                            <MenuItem value='0' key='0' disabled>
+                                                <em>Select Souvenir Name</em>
+                                            </MenuItem>
+                                            {m_souvenirs.map(c => {
+                                                return (
+                                                    <MenuItem key={c._id} value={c._id}>{c.name}</MenuItem>
+                                                )
+                                            })}
+                                            
+                                        </Select>
                                     </TableCell>
+                                    <TableCell><TextField   type="number" style={{width:50,  paddingLeft: 10, paddingRight:10 }}  value={n.qty } onChange={handleChangeItem('qty', n._id)} margin="normal" InputLabelProps={{shrink: true}}></TextField></TableCell>
+                                    <TableCell><TextField  style={{ width: 200, }} value={n.noteS} onChange={handleChangeItem('notes', n._id)} margin="normal" placeholder="Note" ></TextField></TableCell>
                                  </TableRow>
                             );
                         })}

@@ -30,6 +30,8 @@ class M_Product extends React.Component {
     productModel = {
         _id: '', code: '', name: '',  description: '', is_delete: 0, create_by: '', createDate: '', update_by:'', update_date:''
     }
+    
+ 
 
     constructor(props) {
         super(props);
@@ -131,7 +133,9 @@ class M_Product extends React.Component {
             axios.post(config.url + '/m-product', newProduct)
                 .then(res => {
                     this.reloadProductData();
-                    alert('has been saved');
+                    alert('has been saved ' + res.data.ops[0].code);
+                    console.log(res.data);
+                    
 
                 })
                 .catch((error) => {
@@ -141,8 +145,11 @@ class M_Product extends React.Component {
         } else {
             axios.put(config.url + '/m-product/' + product._id, newProduct)
                 .then(res =>{
+                    
                     this.reloadProductData();
-                    alert('has been update');
+                    console.log(res.data);
+                    alert( 'data has been update ' + res.data.code );
+                    
                 })
                 .catch((error) => {
                     alert(error);
@@ -243,6 +250,7 @@ class M_Product extends React.Component {
                     <TableHead>
                         <TableRow>
                             <TableCell style={{fontWeight:"bolder",color:"black"}}>No</TableCell>
+                            
                             <TableCell style={{fontWeight:"bolder",color:"black"}}>Product Code</TableCell>
                             <TableCell style={{fontWeight:"bolder",color:"black"}}>Product Name</TableCell>
                             <TableCell style={{fontWeight:"bolder",color:"black"}}>Description </TableCell>
@@ -258,6 +266,7 @@ class M_Product extends React.Component {
                             return (
                                 <TableRow key={n._id}>
                                  <TableCell >{i++}</TableCell>
+                                 
                                     <TableCell component="th" scope="row">  {n.code} </TableCell>
                                     <TableCell >{n.name}</TableCell>
                                     <TableCell >{n.description}</TableCell>

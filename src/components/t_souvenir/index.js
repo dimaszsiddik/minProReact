@@ -19,7 +19,7 @@ import axios from 'axios';
 
 class T_Souvenir extends React.Component {
 
-    transactionModel = { code: "", recieved_by: "", recieved_date: "", note: "", EmployeeFirstName: "", EmployeeLastName: "" }
+    transactionModel = { code: "", recieved_by: "", recieved_date: "", note: "", EmployeeFirstName: "", EmployeeLastName: "", items:[] }
     idx=0
     constructor(props) {
         super(props);
@@ -80,6 +80,7 @@ class T_Souvenir extends React.Component {
         this.reloadTSouvenirData();
         this.reloadMEmployeeData();
         this.reloadMSouvenirData();
+       
     }
     handleToggle = () => {
         this.setState({
@@ -98,13 +99,24 @@ class T_Souvenir extends React.Component {
         })
     }
 
+    handleChangeItem = (shit, id) => ({ target: { value } }) => {
+        const { items } = this.state;
+        var item = items.find(o => o._id === id);
+        item[shit] = value;
+        this.setState({
+            items: items
+        })
+        console.log(items);
+
+    }
+
     handleClose = () => {
         this.setState({
             createNew: false,
-            editProduct: false,
-            viewProduct: false,
-            deleteProduct: false,
-            // product: this.productModel
+            // editProduct: false,
+            // viewProduct: false,
+            // deleteProduct: false,
+            t_souvenir_stock: this.transactionModel,
 
         })
     }
@@ -112,6 +124,7 @@ class T_Souvenir extends React.Component {
     handleAddItem = () => {
         let items = this.state.items;
         let _id = this.idx + 1;
+      
         this.idx = this.idx + 1;
         var newItems = {
             _id: _id,
@@ -121,13 +134,15 @@ class T_Souvenir extends React.Component {
             
         };
         //newOrder._id = _id;
+       
         items.push(newItems);
         this.setState({
             items: items
            
 
         });
-        console.log(items);
+        
+        
     }
 
     render() {
@@ -138,7 +153,7 @@ class T_Souvenir extends React.Component {
 
             <div>
                 <h3>List Of Transaksi Souvenir Stock</h3>
-                <AddSouvenir createNew={this.state.createNew} handleAddItem={this.handleAddItem} handleToggle={this.handleToggle} handleClose={this.handleClose} handleChange={this.handleChange} handleChangeCheckBox={this.handleChangeCheckBox} t_souvenir_stock={this.state.t_souvenir_stock} handleSubmit={this.handleSubmit} items={this.state.items} m_employee={this.state.m_employee} m_souvenirs={this.state.m_souvenirs}/>
+                <AddSouvenir createNew={this.state.createNew} handleAddItem={this.handleAddItem} handleToggle={this.handleToggle} handleClose={this.handleClose} handleChange={this.handleChange} handleChangeCheckBox={this.handleChangeCheckBox} t_souvenir_stock={this.state.t_souvenir_stock} handleSubmit={this.handleSubmit} items={this.state.items} m_employee={this.state.m_employee} m_souvenirs={this.state.m_souvenirs} item={this.state.item} handleChangeItem={this.handleChangeItem}/>
 
                 <CircularProgress className={classes.progress} style={{ visibility: (load ? 'visible' : 'hidden') }} color="secondary" />
 
