@@ -57,7 +57,7 @@ export default ({ createNew,handleToggle,handleChange,handleClose,handleSubmit,h
                     <br/>
                     {/* <DatePicker></DatePicker>
                     <br/> */}
-                    <TextField style={{width:200}} label="Received Date" value={received_date} onChange={handleChange('received_date')} margin='normal' />
+                    <TextField type ="date" style={{width:200}}  value={received_date} onChange={handleChange('received_date')} margin='normal' />
                     <br />
                     <TextField style={{width:200}} label="Note" value={note} onChange={handleChange('note')} margin="normal" InputLabelProps={{shrink: true}} placeholder="Type Note" multiline/>&nbsp;
                
@@ -91,7 +91,7 @@ export default ({ createNew,handleToggle,handleChange,handleClose,handleSubmit,h
                                                 id: 'souvenir-simple',
                                             }}>
                                             <MenuItem value='0' key='0' disabled>
-                                                <em>Select Souvenir Name</em>
+                                                Select Souvenir Name
                                             </MenuItem>
                                             {m_souvenirs.map(c => {
                                                 return (
@@ -102,7 +102,7 @@ export default ({ createNew,handleToggle,handleChange,handleClose,handleSubmit,h
                                         </Select>
                                     </TableCell>
                                     <TableCell><TextField   type="number" style={{width:50,  paddingLeft: 10, paddingRight:10 }}  value={n.qty } onChange={handleChangeItem('qty', n._id)} margin="normal" InputLabelProps={{shrink: true}}></TextField></TableCell>
-                                    <TableCell><TextField  style={{ width: 200, }} value={n.noteS} onChange={handleChangeItem('notes', n._id)} margin="normal" placeholder="Note" ></TextField></TableCell>
+                                    <TableCell><TextField  style={{ width: 200, }} value={n.notes} onChange={handleChangeItem('notes', n._id)} margin="normal" placeholder="Note" ></TextField></TableCell>
                                  </TableRow>
                             );
                         })}

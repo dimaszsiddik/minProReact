@@ -129,7 +129,7 @@ class M_Product extends React.Component {
         }
 
         if (createNew) {
-           //console.log(newUser)
+        //    console.log(newProduct)
             axios.post(config.url + '/m-product', newProduct)
                 .then(res => {
                     this.reloadProductData();

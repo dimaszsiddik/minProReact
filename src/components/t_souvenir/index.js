@@ -19,7 +19,7 @@ import axios from 'axios';
 
 class T_Souvenir extends React.Component {
 
-    transactionModel = { code: "", recieved_by: "", recieved_date: "", note: "", EmployeeFirstName: "", EmployeeLastName: "", items:[] }
+    transactionModel = { code: "", received_by: "", received_date: "", note: "", EmployeeFirstName: "", EmployeeLastName: "", items:[] }
     idx=0
     constructor(props) {
         super(props);
@@ -85,6 +85,7 @@ class T_Souvenir extends React.Component {
     handleToggle = () => {
         this.setState({
             createNew: true,
+            
             t_souvenir_stock: this.transactionModel,
 
         })
@@ -106,13 +107,14 @@ class T_Souvenir extends React.Component {
         this.setState({
             items: items
         })
-        console.log(items);
+     
 
     }
 
     handleClose = () => {
         this.setState({
             createNew: false,
+            items:[],
             // editProduct: false,
             // viewProduct: false,
             // deleteProduct: false,
@@ -130,7 +132,7 @@ class T_Souvenir extends React.Component {
             _id: _id,
             m_souvenir_id: '',
             qty: 0,
-            note: '',
+            notes: '',
             
         };
         //newOrder._id = _id;
@@ -143,6 +145,39 @@ class T_Souvenir extends React.Component {
         });
         
         
+    }
+
+    handleSubmit = () => {
+        const {  t_souvenir_stock, items, createNew } = this.state;
+        let array = [];
+        let newSouvenirStock = {
+            received_by : t_souvenir_stock.received_by,
+            received_date : t_souvenir_stock.received_date,
+            note : t_souvenir_stock.note,
+            type : 'addtional'
+            
+        }
+        array.push(newSouvenirStock,items)
+
+        if (createNew) {
+            // console.log(arr);
+            console.log(items);
+            axios.post(config.url + '/add_souvenir_stock',array)
+            .then(res => {
+                this.reloadTSouvenirData();
+                
+                alert('has been saved ' );
+            })
+            .catch((error) => {
+                alert(error);
+            })
+          
+
+        } else {
+           
+
+        }
+
     }
 
     render() {
